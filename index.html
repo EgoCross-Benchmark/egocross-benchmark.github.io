@@ -301,7 +301,7 @@
           <img src="assets/team/yanjunli.jpg" alt="Yanjun Li" />
           <div class="name">Yanjun Li</div>
         </div>
-        <div class="team-member" data-homepage="YUQIAN_HOMEPAGE_URL">
+        <div class="team-member" data-homepage="https://yuqianfu.com/">
           <img src="assets/team/yuqianfu.jpg" alt="Yuqian Fu" />
           <div class="name">Yuqian Fu</div>
         </div>
@@ -413,7 +413,7 @@
       teamMembers.forEach(member => {
         member.addEventListener('click', function() {
           const homepageUrl = this.getAttribute('data-homepage');
-          if (homepageUrl && homepageUrl !== 'YANJUN_HOMEPAGE_URL' && homepageUrl !== 'YUQIAN_HOMEPAGE_URL' && homepageUrl !== 'TIANWEN_HOMEPAGE_URL' && homepageUrl !== 'LIYU_HOMEPAGE_URL' ) {
+          if (homepageUrl && homepageUrl !== 'YANJUN_HOMEPAGE_URL'  && homepageUrl !== 'TIANWEN_HOMEPAGE_URL' && homepageUrl !== 'LIYU_HOMEPAGE_URL' ) {
             window.open(homepageUrl, '_blank', 'noopener,noreferrer');
           }
         });
