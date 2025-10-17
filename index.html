@@ -297,10 +297,6 @@
       <h2>Team</h2>
       <p class="lead">East China Normal University &nbsp;•&nbsp; INSAIT •&nbsp; Fudan University</p>
       <div class="team-members" aria-label="Team Members">
-        <div class="team-member" data-homepage="YANJUN_HOMEPAGE_URL">
-          <img src="assets/team/yanjunli.jpg" alt="Yanjun Li" />
-          <div class="name">Yanjun Li</div>
-        </div>
         <div class="team-member" data-homepage="https://yuqianfu.com/">
           <img src="assets/team/yuqianfu.jpg" alt="Yuqian Fu" />
           <div class="name">Yuqian Fu</div>
@@ -309,13 +305,41 @@
           <img src="assets/team/tianwenqian.jpg" alt="Tianwen Qian" />
           <div class="name">Tianwen Qian</div>
         </div>
+        <div class="team-member" data-homepage="YANJUN_HOMEPAGE_URL">
+          <img src="assets/team/yanjunli.jpg" alt="Yanjun Li" />
+          <div class="name">Yanjun Li</div>
+        </div>
         <div class="team-member" data-homepage="LIYU_HOMEPAGE_URL">
-          <img src="assets/team/yuli.jpg" alt="Yu Li" />
+          <img src="assets/team/yuli.webp" alt="Yu Li" />
           <div class="name">Yu Li</div>
+        </div>
+        <div class="team-member" data-homepage="KUNYU_PENG_HOMEPAGE_URL">
+          <img src="assets/team/placeholder.jpg" alt="Kunyu Peng" />
+          <div class="name">Kunyu Peng</div>
+        </div>
+        <div class="team-member" data-homepage="XU_ZHENG_HOMEPAGE_URL">
+          <img src="assets/team/placeholder.jpg" alt="Xu Zheng" />
+          <div class="name">Xu Zheng</div>
+        </div>
+        <div class="team-member" data-homepage="YONGQIN_XIAN_HOMEPAGE_URL">
+          <img src="assets/team/placeholder.jpg" alt="Yongqin Xian" />
+          <div class="name">Yongqin Xian</div>
+        </div>
+        <div class="team-member" data-homepage="ALESSIO_HOMEPAGE_URL">
+          <img src="assets/team/placeholder.jpg" alt="Alessio" />
+          <div class="name">Alessio</div>
         </div>
         <div class="team-member" data-homepage="https://yanweifu.github.io/">
           <img src="assets/team/yanweifu.png" alt="Yanwei Fu" />
           <div class="name">Yanwei Fu</div>
+        </div>
+        <div class="team-member" data-homepage="XIAOLING_WANG_HOMEPAGE_URL">
+          <img src="assets/team/placeholder.jpg" alt="Xiaoling Wang" />
+          <div class="name">Xiaoling Wang</div>
+        </div>
+        <div class="team-member" data-homepage="DAMEN_HOMEPAGE_URL">
+          <img src="assets/team/placeholder.jpg" alt="Damen" />
+          <div class="name">Damen</div>
         </div>
         <div class="team-member" data-homepage="https://insait.ai/dr-danda-paudel/">
           <img src="assets/team/danda.jpg" alt="Danda Paudel" />
@@ -422,7 +446,8 @@
       teamMembers.forEach(member => {
         member.addEventListener('click', function() {
           const homepageUrl = this.getAttribute('data-homepage');
-          if (homepageUrl && homepageUrl !== 'YANJUN_HOMEPAGE_URL'  && homepageUrl !== 'LIYU_HOMEPAGE_URL' ) {
+          const placeholderUrls = ['YANJUN_HOMEPAGE_URL', 'LIYU_HOMEPAGE_URL', 'KUNYU_PENG_HOMEPAGE_URL', 'XU_ZHENG_HOMEPAGE_URL', 'YONGQIN_XIAN_HOMEPAGE_URL', 'ALESSIO_HOMEPAGE_URL', 'XIAOLING_WANG_HOMEPAGE_URL', 'DAMEN_HOMEPAGE_URL'];
+          if (homepageUrl && !placeholderUrls.includes(homepageUrl)) {
             window.open(homepageUrl, '_blank', 'noopener,noreferrer');
           }
         });
