@@ -334,7 +334,7 @@
           <div class="name">Yanwei Fu</div>
         </div>
         <div class="team-member" data-homepage="XIAOLING_WANG_HOMEPAGE_URL">
-          <img src="assets/team/placeholder.jpg" alt="Xiaoling Wang" />
+          <img src="assets/team/xiaolingwang.png" alt="Xiaoling Wang" />
           <div class="name">Xiaoling Wang</div>
         </div>
         <div class="team-member" data-homepage="DAMEN_HOMEPAGE_URL">
@@ -450,7 +450,7 @@
       teamMembers.forEach(member => {
         member.addEventListener('click', function() {
           const homepageUrl = this.getAttribute('data-homepage');
-          const placeholderUrls = ['YANJUN_HOMEPAGE_URL', 'LIYU_HOMEPAGE_URL', 'KUNYU_PENG_HOMEPAGE_URL', 'XU_ZHENG_HOMEPAGE_URL', 'YONGQIN_XIAN_HOMEPAGE_URL', 'ALESSIO_HOMEPAGE_URL', 'XIAOLING_WANG_HOMEPAGE_URL', 'DAMEN_HOMEPAGE_URL'];
+          const placeholderUrls = ['YANJUN_HOMEPAGE_URL', 'LIYU_HOMEPAGE_URL', 'KUNYU_PENG_HOMEPAGE_URL', 'XU_ZHENG_HOMEPAGE_URL', 'YONGQIN_XIAN_HOMEPAGE_URL', 'ALESSIO_HOMEPAGE_URL', 'XIAOLING_WANG_HOMEPAGE_URL', 'DAMEN_HOMEPAGE_URL', 'FEDERICO_HOMEPAGE_URL'];
           if (homepageUrl && !placeholderUrls.includes(homepageUrl)) {
             window.open(homepageUrl, '_blank', 'noopener,noreferrer');
           }
