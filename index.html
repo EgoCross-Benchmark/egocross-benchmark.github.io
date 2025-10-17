@@ -108,6 +108,11 @@
     .res-list{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
     .res{grid-column:span 6;padding:16px;border-radius:14px;border:1px dashed #cfe0ff;background:#f7faff}
     /* Team */
+    .team-members{display:flex;gap:32px;flex-wrap:wrap;align-items:center;justify-content:center}
+    .team-member{text-align:center;cursor:pointer;transition:transform 0.2s ease}
+    .team-member:hover{transform:translateY(-2px)}
+    .team-member img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--brand);box-shadow:var(--shadow)}
+    .team-member .name{margin-top:12px;font-weight:600;color:var(--ink)}
     .logos{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
     .logos img{height:40px;filter:grayscale(0.15)}
     /* Footer */
@@ -290,11 +295,28 @@
   <section id="team" aria-label="Team">
     <div class="container">
       <h2>Team</h2>
-      <p class="lead">East China Normal University &nbsp;•&nbsp; INSAIT</p>
-      <div class="logos" aria-label="Partner Logos">
-        <!-- TODO: replace with your actual logo files -->
-        <img src="assets/logo_egocross.png" alt="EgoCross" />
-        <img src="assets/logo_insait.png" alt="INSAIT" />
+      <p class="lead">East China Normal University &nbsp;•&nbsp; INSAIT •&nbsp; Fudan University</p>
+      <div class="team-members" aria-label="Team Members">
+        <div class="team-member" data-homepage="YANJUN_HOMEPAGE_URL">
+          <img src="assets/team/yanjunli.jpg" alt="Yanjun Li" />
+          <div class="name">Yanjun Li</div>
+        </div>
+        <div class="team-member" data-homepage="YUQIAN_HOMEPAGE_URL">
+          <img src="assets/team/yuqianfu.jpg" alt="Yuqian Fu" />
+          <div class="name">Yuqian Fu</div>
+        </div>
+        <div class="team-member" data-homepage="TIANWEN_HOMEPAGE_URL">
+          <img src="assets/team/tianwenqian.jpg" alt="Tianwen Qian" />
+          <div class="name">Tianwen Qian</div>
+        </div>
+        <div class="team-member" data-homepage="LIYU_HOMEPAGE_URL">
+          <img src="assets/team/yuli.png" alt="Li Yu" />
+          <div class="name">Li Yu</div>
+        </div>
+        <div class="team-member" data-homepage="YANWEIFU_HOMEPAGE_URL">
+          <img src="assets/team/yanweifu.jpg" alt="Yanwei Fu" />
+          <div class="name">Yanwei Fu</div>
+        </div>
       </div>
     </div>
   </section>
@@ -304,9 +326,18 @@
       <h2>Contact</h2>
       <p class="lead">For questions and collaboration, please reach out to our team members.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 20px;">
-        <a class="btn outline" href="mailto:TODO_YUQIAN_EMAIL">Yuqian Fu</a>
-        <a class="btn outline" href="mailto:TODO_TIANWEN_EMAIL">Tianwen Qian</a>
-        <a class="btn outline" href="mailto:51265901098@stu.ecnu.edu.cn">Yanjun Li</a>
+        <div style="text-align: center;">
+          <div style="font-weight: 600; margin-bottom: 4px;">Yanjun Li</div>
+          <div style="color: var(--muted); font-size: 14px;">51265901098@stu.ecnu.edu.cn</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-weight: 600; margin-bottom: 4px;">Yuqian Fu</div>
+          <div style="color: var(--muted); font-size: 14px;">yuqian.fu@insait.ai </div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-weight: 600; margin-bottom: 4px;">Tianwen Qian</div>
+          <div style="color: var(--muted); font-size: 14px;">twqian@cs.ecnu.edu.cn</div>
+        </div>
       </div>
     </div>
   </section>
@@ -374,6 +405,17 @@
           setTimeout(() => {
             video.play().catch(e2 => console.log('Retry play failed:', e2));
           }, 500);
+        });
+      });
+      
+      // Team member homepage navigation
+      const teamMembers = document.querySelectorAll('.team-member');
+      teamMembers.forEach(member => {
+        member.addEventListener('click', function() {
+          const homepageUrl = this.getAttribute('data-homepage');
+          if (homepageUrl && homepageUrl !== 'YANJUN_HOMEPAGE_URL' && homepageUrl !== 'YUQIAN_HOMEPAGE_URL' && homepageUrl !== 'TIANWEN_HOMEPAGE_URL' && homepageUrl !== 'LIYU_HOMEPAGE_URL' && homepageUrl !== 'YANWEIFU_HOMEPAGE_URL') {
+            window.open(homepageUrl, '_blank', 'noopener,noreferrer');
+          }
         });
       });
     });
