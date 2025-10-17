@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EgoCross – Cross‑Domain Egocentric Video QA Benchmark</title>
+  <meta name="description" content="EgoCross is a cross-domain benchmark for evaluating MLLMs on egocentric video question answering across Surgery, Industry, Extreme Sports, and Animal Perspective." />
+  <meta name="keywords" content="EgoCross, egocentric, egovqa, EgoSchema, MLLM, video question answering, benchmark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#8F5975; 
+      --ink:#0b1220; 
+      --muted:#5b6474;
+      --bg:#ffffff;
+      --bg-alt:#f6f8ff;
+      --card:#ffffff;
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --radius:18px;
+      --hero-overlay-color: rgba(16, 123, 128, 0.397);
+      --hero-text-color: #ffffff;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--ink);background:var(--bg)}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1120px;margin:0 auto;padding:0 20px}
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid #e9ecf5}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand img{height:60px;width:auto}
+    .brand .title{font-weight:700;letter-spacing:.2px;font-size:32px}
+    nav ul{list-style:none;margin:0;padding:0;display:flex;gap:18px}
+    nav a{font-weight:600;color:#1a2440}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--brand);color:#fff;background:var(--brand);padding:12px 16px;border-radius:12px;font-weight:700;box-shadow:var(--shadow);transition:transform .08s ease}
+    .btn:hover{text-decoration:none;transform:translateY(-1px)}
+    .btn.outline{background:transparent;color:var(--brand)}
+    .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.4px;color:var(--brand);background:#e9efff;border:1px solid #ccdbff;padding:6px 10px;border-radius:999px}
+    /* Hero */
+    .hero{
+      position:relative;
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      overflow:hidden;
+    }
+    .hero-background{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:1;
+    }
+    .hero-overlay{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:var(--hero-overlay-color);
+      z-index:2;
+    }
+    .hero-content{
+      position:relative;
+      z-index:3;
+      color:var(--hero-text-color);
+      max-width:840px;
+      padding:0 20px;
+    }
+    .hero h1{font-size:64px;line-height:1.08;margin:.2rem 0 1rem;color:var(--hero-text-color)}
+    .hero p{font-size:18px;max-width:840px;color:var(--hero-text-color);opacity:0.9}
+    .hero .tag{color:var(--hero-text-color);background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3)}
+    .btn-hero{display:inline-flex;align-items:center;gap:8px;border:2px solid #ffffff;color:#ffffff;background:transparent;padding:12px 16px;border-radius:12px;font-weight:700;text-decoration:none;transition:all 0.2s ease}
+    .btn-hero:hover{background:var(--brand);color:#ffffff;border-color:var(--brand);text-decoration:none;transform:translateY(-1px)}
+    /* Section */
+    section{padding:64px 0}
+    section h2{font-size:28px;margin:0 0 14px}
+    section p.lead{color:var(--muted);margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .card{grid-column:span 6;background:var(--card);border:1px solid #e9ecf5;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .media{position:relative;background:#e9efff;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .media img{width:100%;height:100%;object-fit:cover}
+    .badge{position:absolute;top:12px;left:12px;background:#ffffff; border:1px solid #dfe7ff;color:#2a3a7a;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px;z-index:3}
+    .card-body{padding:14px 16px}
+    .card h3{font-size:18px;margin:0 0 6px}
+    .muted{color:var(--muted)}
+    /* Video Controls */
+    .video-container{position:relative;width:100%;height:100%}
+    .video-container video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transition:opacity .5s ease}
+    .video-container video.active{opacity:1;z-index:1}
+    .video-container video.inactive{opacity:0;z-index:0}
+    .video-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
+    .video-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.5);border:2px solid rgba(255,255,255,.8);cursor:pointer;transition:all .3s ease}
+    .video-dot:hover{background:rgba(255,255,255,.8);transform:scale(1.2)}
+    .video-dot.active{background:#ffffff;transform:scale(1.15)}
+    /* Download */
+    .dl{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+    .btn.disabled{opacity:.55;cursor:not-allowed}
+    /* Resources */
+    .res-list{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .res{grid-column:span 6;padding:16px;border-radius:14px;border:1px dashed #cfe0ff;background:#f7faff}
+    /* Team */
+    .logos{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .logos img{height:40px;filter:grayscale(0.15)}
+    /* Footer */
+    footer{border-top:1px solid #e9ecf5;padding:28px 0;color:#6b7385;font-size:14px}
+    @media (max-width:880px){
+      .card{grid-column:span 12}
+      .res{grid-column:span 12}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="assets/logo_egocross.png" alt="Egocross Logo" />
+        <span class="title">EgoCross</span>
+      </div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#samples">Samples</a></li>
+          <li><a href="#download">Download</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hero-background" src="teaser.gif" alt="EgoCross Teaser" autoplay loop muted>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>EgoCross</h1>
+      <p>
+        A comprehensive benchmark across <strong>Surgery</strong>, <strong>Industry</strong>, <strong>Extreme Sports</strong>, and <strong>Animal Perspective</strong>. 
+        EgoCross comprises <strong>798</strong> clips and <strong>957</strong> QA pairs, supporting both <strong>CloseQA</strong> and <strong>OpenQA</strong> formats for fine‑grained evaluation.
+      </p>
+      <div style="margin-top: 24px;">
+        <a class="btn-hero" href="#samples">Cross‑Domain Egocentric Video QA</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <h2>About the Dataset</h2>
+      <p class="lead">EgoCross evaluates cross‑domain generalization of multimodal large language models (MLLMs) for egocentric video question answering. It spans four domains and 15 sub‑tasks across Identification, Localization, Prediction, and Counting.</p>
+    </div>
+  </section>
+
+  <!-- Samples (Figure 1 style: 4 domains) -->
+  <section id="samples" aria-label="Representative Samples">
+    <div class="container">
+      <h2>Representative Domains</h2>
+      <p class="lead">Below are four domain exemplars (Figure‑1 style). Replace the placeholders with your own video frames or GIF thumbnails.</p>
+      <div class="grid" style="margin-top:12px">
+        <!-- Surgery -->
+        <article class="card" aria-label="Surgery Domain">
+          <div class="media" role="img" aria-label="Surgery sample video">
+            <div class="video-container">
+              <video class="active" autoplay loop muted playsinline preload="auto" src="assets/surgery_1.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline preload="auto" src="assets/surgery_2.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline preload="auto" src="assets/surgery_3.mp4"></video>
+              <div class="video-dots">
+                <span class="video-dot active" data-domain="surgery" data-index="0"></span>
+                <span class="video-dot" data-domain="surgery" data-index="1"></span>
+                <span class="video-dot" data-domain="surgery" data-index="2"></span>
+              </div>
+            </div>
+            <span class="badge">Surgery</span>
+          </div>
+          <div class="card-body">
+            <h3>Surgery</h3>
+            <p class="muted">Fine‑grained tool recognition, phase understanding, and hand‑specific interactions.</p>
+          </div>
+        </article>
+        <!-- Industry -->
+        <article class="card" aria-label="Industry Domain">
+          <div class="media" role="img" aria-label="Industry sample video">
+            <div class="video-container">
+              <video class="active" autoplay loop muted playsinline src="assets/industry_1.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline src="assets/industry_2.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline src="assets/industry_3.mp4"></video>
+              <div class="video-dots">
+                <span class="video-dot active" data-domain="industry" data-index="0"></span>
+                <span class="video-dot" data-domain="industry" data-index="1"></span>
+                <span class="video-dot" data-domain="industry" data-index="2"></span>
+              </div>
+            </div>
+            <span class="badge">Industry</span>
+          </div>
+          <div class="card-body">
+            <h3>Industry</h3>
+            <p class="muted">Component identification, procedural reasoning, and tool‑usage logic.</p>
+          </div>
+        </article>
+        <!-- Extreme Sports -->
+        <article class="card" aria-label="Extreme Sports Domain">
+          <div class="media" role="img" aria-label="Extreme Sports sample video">
+            <div class="video-container">
+              <video class="active" autoplay loop muted playsinline src="assets/xsports_1.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline src="assets/xsports_2.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline src="assets/xsports_3.mp4"></video>
+              <div class="video-dots">
+                <span class="video-dot active" data-domain="xsports" data-index="0"></span>
+                <span class="video-dot" data-domain="xsports" data-index="1"></span>
+                <span class="video-dot" data-domain="xsports" data-index="2"></span>
+              </div>
+            </div>
+            <span class="badge">Extreme Sports</span>
+          </div>
+          <div class="card-body">
+            <h3>Extreme Sports</h3>
+            <p class="muted">High‑speed egocentric motion, navigation cues, and temporal anticipation.</p>
+          </div>
+        </article>
+        <!-- Animal Perspective -->
+        <article class="card" aria-label="Animal Perspective Domain">
+          <div class="media" role="img" aria-label="Animal Perspective sample video">
+            <div class="video-container">
+              <video class="active" autoplay loop muted playsinline src="assets/animal_1.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline src="assets/animal_2.mp4"></video>
+              <video class="inactive" autoplay loop muted playsinline src="assets/animal_3.mp4"></video>
+              <div class="video-dots">
+                <span class="video-dot active" data-domain="animal" data-index="0"></span>
+                <span class="video-dot" data-domain="animal" data-index="1"></span>
+                <span class="video-dot" data-domain="animal" data-index="2"></span>
+              </div>
+            </div>
+            <span class="badge">Animal Perspective</span>
+          </div>
+          <div class="card-body">
+            <h3>Animal Perspective</h3>
+            <p class="muted">Species cues, alternative movement patterns, and behavioral understanding.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section id="download" aria-label="Download">
+    <div class="container">
+      <h2>Download</h2>
+      <p class="lead">EgoCross dataset is now available on Hugging Face. Access the complete benchmark with all domains and QA pairs.</p>
+      <div class="dl">
+        <a class="btn" href="https://huggingface.co/datasets/myuniverse/EgoCross" target="_blank" rel="noopener">Download from Hugging Face 🤗</a>
+        <span class="muted">Complete dataset with 798 clips and 957 QA pairs across 4 domains.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section id="resources" aria-label="Resources">
+    <div class="container">
+      <h2>Resources</h2>
+      <div class="res-list" style="margin-top:8px">
+        <div class="res">
+          <strong>Paper</strong><br/>
+          <a href="https://arxiv.org/pdf/2508.10729" target="_blank" rel="noopener">EgoCross</a>
+        </div>
+        <div class="res">
+          <strong>GitHub</strong><br/>
+          <a href="https://github.com/MyUniverse0726/EgoCross" target="_blank" rel="noopener">Source Code & Documentation</a>
+        </div>
+        <div class="res">
+          <strong>Getting Started</strong><br/>
+          Data loaders, evaluation scripts, and examples (to be added upon release).
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team & Contact -->
+  <section id="team" aria-label="Team">
+    <div class="container">
+      <h2>Team</h2>
+      <p class="lead">East China Normal University &nbsp;•&nbsp; INSAIT</p>
+      <div class="logos" aria-label="Partner Logos">
+        <!-- TODO: replace with your actual logo files -->
+        <img src="assets/logo_egocross.png" alt="EgoCross" />
+        <img src="assets/logo_insait.png" alt="INSAIT" />
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" aria-label="Contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p class="lead">For questions and collaboration, please reach out to our team members.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 20px;">
+        <a class="btn outline" href="mailto:TODO_YUQIAN_EMAIL">Yuqian Fu</a>
+        <a class="btn outline" href="mailto:TODO_TIANWEN_EMAIL">Tianwen Qian</a>
+        <a class="btn outline" href="mailto:51265901098@stu.ecnu.edu.cn">Yanjun Li</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>© <span id="y"></span> EgoCross. All rights reserved.</div>
+      <div><a href="#about">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // set year
+    document.getElementById('y').textContent = new Date().getFullYear();
+    
+    // Video switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all video dots
+      const videoDots = document.querySelectorAll('.video-dot');
+      
+      videoDots.forEach(dot => {
+        dot.addEventListener('click', function() {
+          const domain = this.getAttribute('data-domain');
+          const index = parseInt(this.getAttribute('data-index'));
+          
+          // Find the video container for this domain
+          const container = this.closest('.video-container');
+          const videos = container.querySelectorAll('video');
+          const dots = container.querySelectorAll('.video-dot');
+          
+          // Remove active class from all videos and dots in this container
+          videos.forEach(video => {
+            video.classList.remove('active');
+            video.classList.add('inactive');
+          });
+          
+          dots.forEach(d => {
+            d.classList.remove('active');
+          });
+          
+          // Add active class to selected video and dot
+          videos[index].classList.remove('inactive');
+          videos[index].classList.add('active');
+          this.classList.add('active');
+          
+          // Ensure the video plays
+          videos[index].play().catch(e => console.log('Video play failed:', e));
+        });
+      });
+      
+      // Ensure all videos start playing when page loads
+      const allVideos = document.querySelectorAll('video');
+      allVideos.forEach((video, index) => {
+        // Add load event listener
+        video.addEventListener('loadeddata', function() {
+          if (this.classList.contains('active')) {
+            this.play().catch(e => console.log('Video play failed on load:', e));
+          }
+        });
+        
+        // Try to play immediately
+        video.play().catch(e => {
+          console.log(`Auto-play failed for video ${index}:`, e);
+          // Try again after a short delay
+          setTimeout(() => {
+            video.play().catch(e2 => console.log('Retry play failed:', e2));
+          }, 500);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
