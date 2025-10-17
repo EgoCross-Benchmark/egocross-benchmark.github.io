@@ -310,11 +310,11 @@
           <div class="name">Tianwen Qian</div>
         </div>
         <div class="team-member" data-homepage="LIYU_HOMEPAGE_URL">
-          <img src="assets/team/yuli.png" alt="Li Yu" />
-          <div class="name">Li Yu</div>
+          <img src="assets/team/yuli.png" alt="Yu Li" />
+          <div class="name">Yu Li</div>
         </div>
-        <div class="team-member" data-homepage="YANWEIFU_HOMEPAGE_URL">
-          <img src="assets/team/yanweifu.jpg" alt="Yanwei Fu" />
+        <div class="team-member" data-homepage="https://yanweifu.github.io/">
+          <img src="assets/team/yanweifu.png" alt="Yanwei Fu" />
           <div class="name">Yanwei Fu</div>
         </div>
       </div>
@@ -413,7 +413,7 @@
       teamMembers.forEach(member => {
         member.addEventListener('click', function() {
           const homepageUrl = this.getAttribute('data-homepage');
-          if (homepageUrl && homepageUrl !== 'YANJUN_HOMEPAGE_URL' && homepageUrl !== 'YUQIAN_HOMEPAGE_URL' && homepageUrl !== 'TIANWEN_HOMEPAGE_URL' && homepageUrl !== 'LIYU_HOMEPAGE_URL' && homepageUrl !== 'YANWEIFU_HOMEPAGE_URL') {
+          if (homepageUrl && homepageUrl !== 'YANJUN_HOMEPAGE_URL' && homepageUrl !== 'YUQIAN_HOMEPAGE_URL' && homepageUrl !== 'TIANWEN_HOMEPAGE_URL' && homepageUrl !== 'LIYU_HOMEPAGE_URL' ) {
             window.open(homepageUrl, '_blank', 'noopener,noreferrer');
           }
         });
